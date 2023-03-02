@@ -13,6 +13,7 @@ type LocalFont<T extends CssVariable | undefined = undefined> = {
         path: string
         weight?: string
         style?: string
+        preload?: boolean
       }>
   display?: Display
   weight?: string

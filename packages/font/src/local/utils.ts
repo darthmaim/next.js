@@ -18,6 +18,7 @@ type FontOptions = {
     path: string
     weight?: string
     style?: string
+    preload?: boolean
     ext: string
     format: string
   }>

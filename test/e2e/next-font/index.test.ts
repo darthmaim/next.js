@@ -435,6 +435,27 @@ describe('next/font', () => {
           'data-next-font': '',
         })
       })
+
+      test('should preload correctly when only partial sources are preloaded', async () => {
+        const html = await renderViaHTTP(next.url, '/with-partial-local-fonts')
+        const $ = cheerio.load(html)
+
+        // Preconnect
+        expect($('link[rel="preconnect"]').length).toBe(0)
+
+        // Preload
+        expect($('link[as="font"]').length).toBe(3)
+
+        expect(
+          Array.from($('link[as="font"]'))
+            .map((el) => el.attribs.href)
+            .sort()
+        ).toEqual([
+          '/_next/static/media/02205c9944024f15-s.p.woff2',
+          '/_next/static/media/0812efcfaefec5ea-s.p.woff2',
+          '/_next/static/media/934c4b7cb736f2a3-s.p.woff2',
+        ])
+      })
     })
 
     describe('Fallback fontfaces', () => {
