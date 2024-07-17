@@ -57,4 +57,12 @@ export function middleware(request) {
       )
     )
   }
+
+  if (request.nextUrl.pathname === '/middleware-vary-header') {
+    return NextResponse.rewrite(new URL('/dashboard', request.url), {
+      headers: {
+        vary: 'x-middleware-vary',
+      },
+    })
+  }
 }

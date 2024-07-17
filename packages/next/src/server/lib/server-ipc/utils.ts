@@ -22,6 +22,7 @@ export const filterReqHeaders = (
       forbiddenHeaders.includes(key) ||
       !(Array.isArray(value) || typeof value === 'string')
     ) {
+      headers[`x-deleted-${key}`] = headers[key]
       delete headers[key]
     }
   }

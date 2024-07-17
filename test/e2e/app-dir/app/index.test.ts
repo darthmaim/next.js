@@ -274,6 +274,11 @@ createNextDescribe(
       )
     })
 
+    it('should preserve custom vary header from middleware', async () => {
+      const res = await next.fetch('/middleware-vary-header')
+      expect(res.headers.get('vary')).toContain('x-middleware-vary')
+    })
+
     it('should pass props from getServerSideProps in root layout', async () => {
       const $ = await next.render$('/dashboard')
       expect($('title').first().text()).toBe('hello world')

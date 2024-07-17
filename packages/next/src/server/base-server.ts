@@ -1516,7 +1516,8 @@ export default abstract class Server<ServerOptions extends Options = Options> {
     // For pages we need to ensure the correct Vary header is set too, to avoid
     // caching issues when navigating between pages and app
     if (!isAppPath && isFlightRequest) {
-      res.setHeader('vary', RSC_VARY_HEADER)
+      const vary = res.getHeader('vary')
+      res.setHeader('vary', RSC_VARY_HEADER + (vary ? `, ${vary}` : ''))
     }
 
     // we need to ensure the status code if /404 is visited directly
@@ -1608,7 +1609,8 @@ export default abstract class Server<ServerOptions extends Options = Options> {
     }
 
     if (isAppPath) {
-      res.setHeader('vary', RSC_VARY_HEADER)
+      const vary = res.getHeader('vary')
+      res.setHeader('vary', RSC_VARY_HEADER + (vary ? `, ${vary}` : ''))
 
       // We don't clear RSC headers in development since SSG doesn't apply
       // These headers are cleared for SSG as we need to always generate the
